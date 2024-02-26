@@ -10,7 +10,8 @@ class FACETSFormatter():
         self.item_names = None
 
     def _parse_entries(self):
-        print(self.json["assessment_response_list_anonymized"][0].keys())
+        print("Available fields: ", self.json["assessment_response_list_anonymized"][0].keys())
+        print("DEBUG", self.json["assessment_response_list_anonymized"][0])
         rows = []
         for entry in self.json["assessment_response_list_anonymized"]:
             # Have to filter by gruop id here to get latest version of FACETS
@@ -26,6 +27,7 @@ class FACETSFormatter():
                             entry["subject_id"],
                             entry["subject_group_id"],
                             entry["last_updated_at"],
+                            entry["respondent_hash"],
                             section_id,
                             item_id,
                             value    
@@ -37,6 +39,7 @@ class FACETSFormatter():
             "Subject ID", 
             "Group ID", 
             "Time", 
+            "Subject-Respondent Pair ID",
             "Section ID",
             "Item ID", 
             "Value"
@@ -59,14 +62,14 @@ class FACETSFormatter():
         
     def _map_ids(self):
         id_mapping = pd.read_csv("data/id_mapping_facets.csv", index_col="subject_id")
-        self.df["Hospital ID"] = self.df["Subject ID"].map(
+        self.df["Study ID"] = self.df["Subject ID"].map(
             id_mapping["dislay_label"]
         )
 
     def _transpose_items(self):
         df_to_transpose = self.df.drop("Section ID", axis=1)
         df_to_transpose = df_to_transpose.reset_index().pivot(index = [
-            "Entry ID", "Actor type", "Subject ID","Hospital ID", "Group ID"
+            "Entry ID", "Actor type", "Subject ID","Study ID", "Group ID", "Time", "Subject-Respondent Pair ID"
         ], columns = "Item ID", values = "Value").reset_index()
 
         self.df = df_to_transpose

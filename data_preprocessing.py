@@ -21,6 +21,8 @@ def preprocess_sdq(sdq_data):
     # Replace #VALUE! and -1 with np.nan
     sdq_data.replace("#VALUE!", np.nan, inplace=True)
     sdq_data.replace("-1", np.nan, inplace=True)
+    # Drop where SDQ completion != 1
+    sdq_data = sdq_data[sdq_data["SDQ completion"] == 1]
 
     # Make all columns numeric except ID
     for col in sdq_data.columns:
@@ -42,11 +44,18 @@ if __name__ == "__main__":
 
     sdq_data = preprocess_sdq(sdq_data)
     facets_data = preprocess_facets(facets_data)
+    
+    sdq_data.to_csv("data/sdq_scored_cleaned.csv")
+    facets_data.to_csv("data/facets_transformed.csv")
 
     merged = sdq_data.merge(
         facets_data, 
         left_on="anonymised ID", 
-        right_on="Hospital ID")
+        right_on="Study ID")
     print(merged.describe())
 
     merged.to_csv("data/merged.csv")
+
+    print("Unique Patient IDs in SDQ: ", len(sdq_data["anonymised ID"].unique()))
+    print("Unique Patient IDs in FACETS: ", len(facets_data["Subject ID"].unique()))
+    print("Unique Patient IDs in Merged: ", len(merged["anonymised ID"].unique()))

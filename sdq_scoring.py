@@ -67,6 +67,4 @@ class SDQScorer():
         self._recode_inverse_items()
         self._score()
 
-        self.df.to_csv("data/sdq_scored.csv")
-
         return self.df

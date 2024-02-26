@@ -66,6 +66,16 @@ def plot_histograms_facets(data, facets_cols):
     #plt.tight_layout()
     plt.savefig("data/plots/facet_histograms.png")
 
+def multiple_regression(data, sdq_subscales, facets_cols):
+    print(data[sdq_subscales].isna().sum(), data[facets_cols].isna().sum())
+    import statsmodels.api as sm
+    for subscale in sdq_subscales:
+        print(subscale)
+        mod = sm.OLS(data[subscale], data[facets_cols])
+        result = mod.fit()
+        #print(result.params)
+        print(result.summary())
+
 if __name__ == "__main__":
 
     data = pd.read_csv("data/merged.csv", index_col=0)
@@ -74,8 +84,8 @@ if __name__ == "__main__":
     description.to_csv("data/output/description.csv")
 
     data_for_corr = data.drop([
-        "Entry ID", "Actor type", "Subject ID", "Hospital ID", "Group ID",
-        "anonymised ID"
+        "Entry ID", "Actor type", "Subject ID", "Study ID", "Group ID",
+        "anonymised ID", "Time", "Subject-Respondent Pair ID"
     ], axis=1)
     print(data_for_corr.columns)
 
@@ -83,15 +93,15 @@ if __name__ == "__main__":
     facets_cols = [x for x in data_for_corr.columns if "_" in x]
     sdq_item_cols = [x for x in data_for_corr.columns if x not in facets_cols and x not in sdq_subscales]
     
-    make_corr_matrix(data_for_corr, sdq_subscales, facets_cols)
-    make_scatter_plots(data, sdq_subscales, facets_cols)
-    plot_histograms_facets(data_for_corr, facets_cols)
+    #make_corr_matrix(data_for_corr, sdq_subscales, facets_cols)
+    #make_scatter_plots(data, sdq_subscales, facets_cols)
+    #plot_histograms_facets(data_for_corr, facets_cols)
+    multiple_regression(data, sdq_subscales, facets_cols)
 
     cats = []
     for col in data.columns:
         if "_" in col:
             cat = col.split("_")[0]
-            print(cat)
             cats.append(cat)
     cats = set(cats)
     print(cats)
