@@ -37,6 +37,18 @@ def preprocess_sdq(sdq_data):
 
     return scored_sdq
 
+def split_by_anchor(data):
+    facets_cols = [x for x in data.columns if "_" in x] + ["toileting"]
+
+    for col in facets_cols:
+        left_col_name = col+"_LEFT"
+        right_col_name = col+"_RIGHT"
+
+        data[left_col_name] = np.where(data[col]<=0.5, data[col], np.nan)
+        data[right_col_name] = np.where(data[col]>=0.5, data[col], np.nan)
+
+    return data
+
 if __name__ == "__main__":
     
     facets_data = json.load(open("data/facets.json"))
@@ -59,3 +71,6 @@ if __name__ == "__main__":
     print("Unique Patient IDs in SDQ: ", len(sdq_data["anonymised ID"].unique()))
     print("Unique Patient IDs in FACETS: ", len(facets_data["Subject ID"].unique()))
     print("Unique Patient IDs in Merged: ", len(merged["anonymised ID"].unique()))
+
+    merged_and_split_by_anchor = split_by_anchor(merged)
+    merged_and_split_by_anchor.to_csv("data/merged_split_by_anchor.csv")
