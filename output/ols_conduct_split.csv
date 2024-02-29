@@ -1,0 +1,138 @@
+                      OLS Regression Results                     
+Dep. Variable:   ,conduct         ,  R-squared:         ,   0.841
+Model:           ,OLS             ,  Adj. R-squared:    ,   0.669
+Method:          ,Least Squares   ,  F-statistic:       ,   4.894
+Date:            ,Thu, 29 Feb 2024,  Prob (F-statistic):,1.17e-14
+Time:            ,13:58:03        ,  Log-Likelihood:    , -297.94
+No. Observations:,   209          ,  AIC:               ,   813.9
+Df Residuals:    ,   100          ,  BIC:               ,   1178.
+Df Model:        ,   108          ,                     ,        
+Covariance Type: ,nonrobust       ,                     ,        
+                                                                          ,   coef   , std err ,    t    ,P>|t| ,  [0.025 ,  0.975] 
+behavior_activity-level_LEFT                                              ,   -2.6324,    5.190,   -0.507, 0.613,  -12.930,    7.665
+behavior_activity-level_RIGHT                                             ,   -4.8217,    3.903,   -1.236, 0.220,  -12.564,    2.921
+behavior_anger-management_LEFT                                            ,  -18.5915,   19.316,   -0.962, 0.338,  -56.914,   19.731
+behavior_anger-management_RIGHT                                           ,   -2.2471,    5.838,   -0.385, 0.701,  -13.830,    9.336
+behavior_assertiveness_LEFT                                               ,    6.0990,    5.724,    1.066, 0.289,   -5.257,   17.455
+behavior_assertiveness_RIGHT                                              ,    8.3780,    6.221,    1.347, 0.181,   -3.965,   20.721
+behavior_compliance_LEFT                                                  ,    2.7102,    5.776,    0.469, 0.640,   -8.749,   14.169
+behavior_compliance_RIGHT                                                 ,   11.1552,    5.956,    1.873, 0.064,   -0.661,   22.972
+behavior_habits-routines_LEFT                                             ,   -1.9463,   12.644,   -0.154, 0.878,  -27.032,   23.140
+behavior_habits-routines_RIGHT                                            ,    3.1499,    5.105,    0.617, 0.539,   -6.978,   13.277
+behavior_obsessive-thoughts_LEFT                                          ,    3.1018,    9.460,    0.328, 0.744,  -15.667,   21.870
+behavior_obsessive-thoughts_RIGHT                                         ,   -1.8735,    4.373,   -0.428, 0.669,  -10.549,    6.802
+behavior_play_LEFT                                                        ,    3.2769,    8.248,    0.397, 0.692,  -13.087,   19.641
+behavior_play_RIGHT                                                       ,   12.3330,    9.748,    1.265, 0.209,   -7.006,   31.673
+behavior_risk-taking_LEFT                                                 ,    6.2019,   10.725,    0.578, 0.564,  -15.077,   27.480
+behavior_risk-taking_RIGHT                                                ,  -13.6221,    5.956,   -2.287, 0.024,  -25.438,   -1.806
+behavior_self-control_LEFT                                                ,    2.5746,    4.688,    0.549, 0.584,   -6.727,   11.876
+behavior_self-control_RIGHT                                               ,   13.0023,    7.833,    1.660, 0.100,   -2.538,   28.542
+cognition_abstract-thinking_LEFT                                          ,   -5.0727,    6.261,   -0.810, 0.420,  -17.495,    7.350
+cognition_abstract-thinking_RIGHT                                         ,    9.3111,   22.118,    0.421, 0.675,  -34.571,   53.193
+cognition_attention-concentration_LEFT                                    ,    1.9869,    7.700,    0.258, 0.797,  -13.290,   17.264
+cognition_attention-concentration_RIGHT                                   ,    0.1782,   12.697,    0.014, 0.989,  -25.012,   25.369
+cognition_memory-recall_LEFT                                              ,  -10.1256,   13.295,   -0.762, 0.448,  -36.503,   16.252
+cognition_memory-recall_RIGHT                                             ,  -20.0189,   16.673,   -1.201, 0.233,  -53.098,   13.060
+cognition_planning-and-organization_LEFT                                  ,    2.3331,    7.101,    0.329, 0.743,  -11.755,   16.421
+cognition_planning-and-organization_RIGHT                                 ,    8.1992,   10.208,    0.803, 0.424,  -12.052,   28.451
+cognition_self-image_LEFT                                                 ,    5.0761,    5.547,    0.915, 0.362,   -5.929,   16.081
+cognition_self-image_RIGHT                                                ,   -3.7819,   14.313,   -0.264, 0.792,  -32.178,   24.614
+cognition_task-completion_LEFT                                            ,    8.0327,    7.475,    1.075, 0.285,   -6.797,   22.863
+cognition_task-completion_RIGHT                                           ,   -8.0532,    9.951,   -0.809, 0.420,  -27.795,   11.689
+cognition_thinking-speed_LEFT                                             ,   -1.6884,    6.034,   -0.280, 0.780,  -13.660,   10.283
+cognition_thinking-speed_RIGHT                                            ,   -0.0363,    6.870,   -0.005, 0.996,  -13.667,   13.594
+communication_expressive-language_LEFT                                    ,   -5.6589,    7.428,   -0.762, 0.448,  -20.397,    9.079
+communication_expressive-language_RIGHT                                   ,    7.7242,   11.189,    0.690, 0.492,  -14.475,   29.923
+communication_receptive-language_LEFT                                     ,   22.3816,   17.399,    1.286, 0.201,  -12.138,   56.901
+communication_receptive-language_RIGHT                                    ,    2.9532,   10.613,    0.278, 0.781,  -18.102,   24.009
+communication_speech-quality_LEFT                                         ,   -5.7098,    7.701,   -0.741, 0.460,  -20.989,    9.569
+communication_speech-quality_RIGHT                                        ,    0.2356,    6.683,    0.035, 0.972,  -13.024,   13.495
+communication_speech-quantity_LEFT                                        ,   -1.3306,    6.345,   -0.210, 0.834,  -13.920,   11.259
+communication_speech-quantity_RIGHT                                       ,    2.9650,    5.882,    0.504, 0.615,   -8.705,   14.635
+daily-routines_morning-routine_LEFT                                       ,   -5.6321,    5.404,   -1.042, 0.300,  -16.354,    5.090
+daily-routines_morning-routine_RIGHT                                      ,   -6.2498,   10.273,   -0.608, 0.544,  -26.631,   14.131
+daily-routines_screen-time_LEFT                                           ,  -34.6333,   25.663,   -1.350, 0.180,  -85.547,   16.281
+daily-routines_screen-time_RIGHT                                          ,    9.8714,    3.168,    3.116, 0.002,    3.586,   16.157
+daily-routines_transitions_LEFT                                           ,   -6.4112,    8.060,   -0.795, 0.428,  -22.403,    9.581
+daily-routines_transitions_RIGHT                                          ,    7.2279,    8.220,    0.879, 0.381,   -9.081,   23.537
+emotion_attachment_LEFT                                                   ,    3.5104,    8.434,    0.416, 0.678,  -13.223,   20.244
+emotion_attachment_RIGHT                                                  ,   -4.7574,    3.890,   -1.223, 0.224,  -12.475,    2.960
+emotion_emotional-regulation-and-reactivity_LEFT                          ,   10.9007,    7.379,    1.477, 0.143,   -3.740,   25.541
+emotion_emotional-regulation-and-reactivity_RIGHT                         ,    5.1093,    5.555,    0.920, 0.360,   -5.912,   16.131
+emotion_empathy_LEFT                                                      ,    6.2712,    4.564,    1.374, 0.173,   -2.784,   15.327
+emotion_empathy_RIGHT                                                     ,    1.4776,    5.106,    0.289, 0.773,   -8.652,   11.607
+emotion_irritability_LEFT                                                 ,  -11.4690,   11.709,   -0.979, 0.330,  -34.700,   11.762
+emotion_irritability_RIGHT                                                ,   -3.4406,    4.887,   -0.704, 0.483,  -13.136,    6.254
+emotion_stress-management_LEFT                                            ,  -13.9002,   14.046,   -0.990, 0.325,  -41.767,   13.966
+emotion_stress-management_RIGHT                                           ,   -3.2074,    5.148,   -0.623, 0.535,  -13.420,    7.005
+emotion_worries-anxiety_LEFT                                              ,   -0.4805,    9.570,   -0.050, 0.960,  -19.467,   18.506
+emotion_worries-anxiety_RIGHT                                             ,    1.3534,    5.351,    0.253, 0.801,   -9.264,   11.970
+learning-and-acquisition-of-knowledge-and-skills_academic-motivation_LEFT ,   -8.7843,    8.014,   -1.096, 0.276,  -24.685,    7.116
+learning-and-acquisition-of-knowledge-and-skills_academic-motivation_RIGHT,    2.1340,    3.623,    0.589, 0.557,   -5.054,    9.322
+learning-and-acquisition-of-knowledge-and-skills_fine-motor-skills_LEFT   ,    1.1145,    7.842,    0.142, 0.887,  -14.443,   16.672
+learning-and-acquisition-of-knowledge-and-skills_fine-motor-skills_RIGHT  ,   -1.6672,    4.634,   -0.360, 0.720,  -10.860,    7.526
+learning-and-acquisition-of-knowledge-and-skills_gross-motor-skills_LEFT  ,   -0.5446,    7.565,   -0.072, 0.943,  -15.553,   14.464
+learning-and-acquisition-of-knowledge-and-skills_gross-motor-skills_RIGHT ,  -15.3247,    9.919,   -1.545, 0.126,  -35.005,    4.355
+learning-and-acquisition-of-knowledge-and-skills_learning-strategies_LEFT ,    0.9341,    6.600,    0.142, 0.888,  -12.160,   14.028
+learning-and-acquisition-of-knowledge-and-skills_learning-strategies_RIGHT,    1.4231,    7.163,    0.199, 0.843,  -12.788,   15.634
+learning-and-acquisition-of-knowledge-and-skills_math-arithmetic_LEFT     ,    2.3418,    4.595,    0.510, 0.611,   -6.774,   11.457
+learning-and-acquisition-of-knowledge-and-skills_math-arithmetic_RIGHT    ,    1.6940,   13.339,    0.127, 0.899,  -24.770,   28.158
+learning-and-acquisition-of-knowledge-and-skills_reading_LEFT             ,    4.7112,    7.475,    0.630, 0.530,  -10.118,   19.541
+learning-and-acquisition-of-knowledge-and-skills_reading_RIGHT            ,    6.1382,   13.342,    0.460, 0.646,  -20.332,   32.608
+learning-and-acquisition-of-knowledge-and-skills_writing_LEFT             ,   -2.6174,    7.992,   -0.328, 0.744,  -18.473,   13.238
+learning-and-acquisition-of-knowledge-and-skills_writing_RIGHT            ,    2.1310,   14.811,    0.144, 0.886,  -27.255,   31.516
+other-special-issues_bullying_LEFT                                        ,   -0.4604,    1.063,   -0.433, 0.666,   -2.568,    1.648
+other-special-issues_bullying_RIGHT                                       ,    0.3714,    1.210,    0.307, 0.759,   -2.029,    2.771
+other-special-issues_perception-of-reality_LEFT                           ,    0.6628,    1.137,    0.583, 0.561,   -1.594,    2.919
+other-special-issues_perception-of-reality_RIGHT                          ,   -0.7518,    0.978,   -0.769, 0.444,   -2.692,    1.189
+other-special-issues_physically-harms-self_LEFT                           ,    0.4590,    0.974,    0.471, 0.638,   -1.473,    2.391
+other-special-issues_physically-harms-self_RIGHT                          ,   -0.5479,    0.900,   -0.609, 0.544,   -2.334,    1.238
+other-special-issues_physically-or-emotionally-harms-others_LEFT          ,   -0.3465,    2.219,   -0.156, 0.876,   -4.749,    4.056
+other-special-issues_physically-or-emotionally-harms-others_RIGHT         ,    0.2576,    1.689,    0.152, 0.879,   -3.094,    3.609
+other-special-issues_self-care-hygiene_LEFT                               ,   -0.3863,    2.017,   -0.191, 0.849,   -4.389,    3.616
+other-special-issues_self-care-hygiene_RIGHT                              ,    0.2973,    2.010,    0.148, 0.883,   -3.691,    4.285
+other-special-issues_sleep_LEFT                                           ,   -0.7606,    0.883,   -0.861, 0.391,   -2.513,    0.992
+other-special-issues_sleep_RIGHT                                          ,    0.6716,    0.887,    0.757, 0.451,   -1.089,    2.432
+other-special-issues_substance-use_LEFT                                   ,   -2.2079,    1.894,   -1.166, 0.246,   -5.965,    1.549
+other-special-issues_substance-use_RIGHT                                  ,    2.1189,    1.553,    1.364, 0.176,   -0.963,    5.200
+other-special-issues_tics-and-other-atypical-movements_LEFT               ,   -1.4192,    2.283,   -0.622, 0.536,   -5.949,    3.111
+other-special-issues_tics-and-other-atypical-movements_RIGHT              ,    1.3302,    1.930,    0.689, 0.492,   -2.499,    5.159
+other-special-issues_trauma-history_LEFT                                  ,    2.9830,    1.651,    1.807, 0.074,   -0.292,    6.258
+other-special-issues_trauma-history_RIGHT                                 ,   -3.0720,    1.890,   -1.625, 0.107,   -6.822,    0.678
+personality_creativity_LEFT                                               ,    5.3485,    8.369,    0.639, 0.524,  -11.255,   21.952
+personality_creativity_RIGHT                                              ,  -10.3955,    6.723,   -1.546, 0.125,  -23.733,    2.942
+personality_future-outlook_LEFT                                           ,   -5.1382,    4.836,   -1.063, 0.291,  -14.732,    4.456
+personality_future-outlook_RIGHT                                          ,  -21.6297,   21.631,   -1.000, 0.320,  -64.545,   21.285
+personality_integrity-and-honesty_LEFT                                    ,    9.8017,   10.019,    0.978, 0.330,  -10.076,   29.680
+personality_integrity-and-honesty_RIGHT                                   ,   13.9329,    8.498,    1.639, 0.104,   -2.927,   30.793
+personality_perseverance_LEFT                                             ,   -0.3799,    5.304,   -0.072, 0.943,  -10.903,   10.143
+personality_perseverance_RIGHT                                            ,  -11.4535,    6.519,   -1.757, 0.082,  -24.388,    1.481
+personality_responsibility-for-self-and-others_LEFT                       ,   -2.3397,    6.167,   -0.379, 0.705,  -14.575,    9.896
+personality_responsibility-for-self-and-others_RIGHT                      ,    1.6437,    9.138,    0.180, 0.858,  -16.486,   19.774
+personality_self-confidence_LEFT                                          ,   -6.1126,    4.645,   -1.316, 0.191,  -15.328,    3.103
+personality_self-confidence_RIGHT                                         ,   -5.0195,   20.370,   -0.246, 0.806,  -45.433,   35.394
+social-function_social-communication_LEFT                                 ,   -3.4511,    7.425,   -0.465, 0.643,  -18.182,   11.280
+social-function_social-communication_RIGHT                                ,   -1.4181,    5.980,   -0.237, 0.813,  -13.282,   10.446
+social-function_social-cooperation_LEFT                                   ,    2.1425,    5.295,    0.405, 0.687,   -8.362,   12.647
+social-function_social-cooperation_RIGHT                                  ,    2.0914,    8.942,    0.234, 0.816,  -15.648,   19.831
+social-function_social-engagement_LEFT                                    ,   -1.2276,    6.728,   -0.182, 0.856,  -14.576,   12.121
+social-function_social-engagement_RIGHT                                   ,   -0.4933,    4.953,   -0.100, 0.921,  -10.319,    9.333
+social-function_tolerance_LEFT                                            ,  -18.6716,   11.043,   -1.691, 0.094,  -40.580,    3.237
+social-function_tolerance_RIGHT                                           ,   -2.9546,    7.641,   -0.387, 0.700,  -18.115,   12.206
+somatic-and-sensory-functions_eating_LEFT                                 ,    2.4576,    4.474,    0.549, 0.584,   -6.418,   11.333
+somatic-and-sensory-functions_eating_RIGHT                                ,    8.1157,    6.525,    1.244, 0.216,   -4.829,   21.060
+somatic-and-sensory-functions_sensory-reactivity_LEFT                     ,   18.3186,   11.810,    1.551, 0.124,   -5.113,   41.750
+somatic-and-sensory-functions_sensory-reactivity_RIGHT                    ,   -2.2214,    2.095,   -1.061, 0.291,   -6.377,    1.934
+somatic-and-sensory-functions_sexual-identity-behavior_LEFT               ,   18.1531,   14.787,    1.228, 0.222,  -11.184,   47.490
+somatic-and-sensory-functions_sexual-identity-behavior_RIGHT              ,   24.9234,   42.878,    0.581, 0.562,  -60.145,  109.992
+toileting_LEFT                                                            ,    0.0107,    1.883,    0.006, 0.995,   -3.726,    3.747
+toileting_RIGHT                                                           ,   -0.0997,    1.603,   -0.062, 0.951,   -3.280,    3.081
+Omnibus:      ,41.097,  Durbin-Watson:     ,   1.432
+Prob(Omnibus):, 0.000,  Jarque-Bera (JB):  , 141.641
+Skew:         , 0.743,  Prob(JB):          ,1.75e-31
+Kurtosis:     , 6.750,  Cond. No.          ,1.21e+16
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The smallest eigenvalue is 3.49e-30. This might indicate that there are
+strong multicollinearity problems or that the design matrix is singular.

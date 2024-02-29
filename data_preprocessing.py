@@ -40,12 +40,17 @@ def preprocess_sdq(sdq_data):
 def split_by_anchor(data):
     facets_cols = [x for x in data.columns if "_" in x] + ["toileting"]
 
+    # Move data to -0.5 so perfect behavior is 0
+    data[facets_cols] = data[facets_cols]-0.5
+
     for col in facets_cols:
         left_col_name = col+"_LEFT"
         right_col_name = col+"_RIGHT"
 
-        data[left_col_name] = np.where(data[col]<=0.5, data[col], np.nan)
-        data[right_col_name] = np.where(data[col]>=0.5, data[col], np.nan)
+        data[left_col_name] = np.where(data[col]<=0, -data[col], 0)
+        data[right_col_name] = np.where((data[col]>=0), data[col], 0)
+
+    data = data.drop(facets_cols, axis=1)
 
     return data
 

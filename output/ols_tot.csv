@@ -1,0 +1,78 @@
+                          OLS Regression Results                          
+Dep. Variable:   ,tot             ,  R-squared (uncentered):     ,   0.957
+Model:           ,OLS             ,  Adj. R-squared (uncentered):,   0.940
+Method:          ,Least Squares   ,  F-statistic:                ,   56.37
+Date:            ,Thu, 29 Feb 2024,  Prob (F-statistic):         ,3.06e-78
+Time:            ,13:58:03        ,  Log-Likelihood:             , -558.21
+No. Observations:,   209          ,  AIC:                        ,   1234.
+Df Residuals:    ,   150          ,  BIC:                        ,   1432.
+Df Model:        ,    59          ,                              ,        
+Covariance Type: ,nonrobust       ,                              ,        
+                                                                    ,   coef   , std err ,    t    ,P>|t| ,  [0.025 ,  0.975] 
+behavior_activity-level                                             ,    2.0745,    2.626,    0.790, 0.431,   -3.114,    7.263
+behavior_anger-management                                           ,    9.7360,    4.929,    1.975, 0.050,   -0.003,   19.475
+behavior_assertiveness                                              ,    3.5716,    2.933,    1.218, 0.225,   -2.224,    9.367
+behavior_compliance                                                 ,    0.2132,    2.978,    0.072, 0.943,   -5.670,    6.097
+behavior_habits-routines                                            ,   -5.1027,    3.747,   -1.362, 0.175,  -12.506,    2.300
+behavior_obsessive-thoughts                                         ,    1.3289,    3.041,    0.437, 0.663,   -4.680,    7.337
+behavior_play                                                       ,    4.2720,    3.216,    1.328, 0.186,   -2.082,   10.626
+behavior_risk-taking                                                ,   -6.9892,    4.033,   -1.733, 0.085,  -14.959,    0.981
+behavior_self-control                                               ,    3.1175,    2.818,    1.106, 0.270,   -2.451,    8.686
+cognition_abstract-thinking                                         ,   -3.9765,    5.834,   -0.682, 0.497,  -15.504,    7.551
+cognition_attention-concentration                                   ,   -3.2877,    3.861,   -0.852, 0.396,  -10.916,    4.340
+cognition_memory-recall                                             ,    2.7211,    6.656,    0.409, 0.683,  -10.430,   15.873
+cognition_planning-and-organization                                 ,   -7.0705,    4.371,   -1.618, 0.108,  -15.708,    1.567
+cognition_self-image                                                ,    5.1104,    4.573,    1.118, 0.266,   -3.925,   14.146
+cognition_task-completion                                           ,   -8.9504,    5.167,   -1.732, 0.085,  -19.159,    1.259
+cognition_thinking-speed                                            ,   -2.9417,    3.598,   -0.818, 0.415,  -10.051,    4.168
+communication_expressive-language                                   ,   -3.3027,    3.870,   -0.853, 0.395,  -10.950,    4.345
+communication_receptive-language                                    ,    0.1415,    5.282,    0.027, 0.979,  -10.295,   10.578
+communication_speech-quality                                        ,    6.3980,    4.400,    1.454, 0.148,   -2.295,   15.092
+communication_speech-quantity                                       ,    2.5956,    4.082,    0.636, 0.526,   -5.470,   10.661
+daily-routines_morning-routine                                      ,   12.4336,    4.370,    2.845, 0.005,    3.798,   21.069
+daily-routines_screen-time                                          ,    6.2295,    3.124,    1.994, 0.048,    0.058,   12.401
+daily-routines_transitions                                          ,   -0.2338,    5.264,   -0.044, 0.965,  -10.635,   10.168
+emotion_attachment                                                  ,   -3.8417,    3.293,   -1.167, 0.245,  -10.348,    2.665
+emotion_emotional-regulation-and-reactivity                         ,   -1.3145,    2.740,   -0.480, 0.632,   -6.728,    4.099
+emotion_empathy                                                     ,   -0.8015,    3.491,   -0.230, 0.819,   -7.700,    6.097
+emotion_irritability                                                ,   -0.3020,    3.914,   -0.077, 0.939,   -8.036,    7.433
+emotion_stress-management                                           ,    4.1475,    4.494,    0.923, 0.358,   -4.732,   13.027
+emotion_worries-anxiety                                             ,   12.3072,    3.978,    3.094, 0.002,    4.448,   20.167
+learning-and-acquisition-of-knowledge-and-skills_academic-motivation,   -1.9894,    3.114,   -0.639, 0.524,   -8.143,    4.164
+learning-and-acquisition-of-knowledge-and-skills_fine-motor-skills  ,    4.6614,    3.490,    1.336, 0.184,   -2.234,   11.557
+learning-and-acquisition-of-knowledge-and-skills_gross-motor-skills ,   -4.2166,    3.807,   -1.108, 0.270,  -11.739,    3.306
+learning-and-acquisition-of-knowledge-and-skills_learning-strategies,   11.4484,    4.339,    2.639, 0.009,    2.875,   20.021
+learning-and-acquisition-of-knowledge-and-skills_math-arithmetic    ,    5.5428,    4.989,    1.111, 0.268,   -4.314,   15.400
+learning-and-acquisition-of-knowledge-and-skills_reading            ,    3.6026,    5.435,    0.663, 0.508,   -7.136,   14.341
+learning-and-acquisition-of-knowledge-and-skills_writing            ,  -10.8402,    5.990,   -1.810, 0.072,  -22.677,    0.996
+other-special-issues_bullying                                       ,   -2.0119,    0.989,   -2.035, 0.044,   -3.965,   -0.058
+other-special-issues_perception-of-reality                          ,   -1.3733,    1.334,   -1.029, 0.305,   -4.009,    1.263
+other-special-issues_physically-harms-self                          ,   -2.6797,    1.383,   -1.937, 0.055,   -5.413,    0.054
+other-special-issues_physically-or-emotionally-harms-others         ,   -1.9435,    1.690,   -1.150, 0.252,   -5.283,    1.396
+other-special-issues_self-care-hygiene                              ,   -2.7382,    1.706,   -1.605, 0.110,   -6.108,    0.632
+other-special-issues_sleep                                          ,    0.7669,    0.987,    0.777, 0.439,   -1.184,    2.718
+other-special-issues_substance-use                                  ,    0.7449,    1.793,    0.415, 0.678,   -2.798,    4.288
+other-special-issues_tics-and-other-atypical-movements              ,    5.3648,    1.872,    2.866, 0.005,    1.666,    9.064
+other-special-issues_trauma-history                                 ,   -2.9909,    1.785,   -1.676, 0.096,   -6.518,    0.536
+personality_creativity                                              ,   -2.8406,    4.473,   -0.635, 0.526,  -11.679,    5.998
+personality_future-outlook                                          ,    2.1681,    4.217,    0.514, 0.608,   -6.164,   10.500
+personality_integrity-and-honesty                                   ,    2.4293,    3.590,    0.677, 0.500,   -4.664,    9.523
+personality_perseverance                                            ,   -0.9239,    3.361,   -0.275, 0.784,   -7.566,    5.718
+personality_responsibility-for-self-and-others                      ,    1.4982,    4.181,    0.358, 0.721,   -6.764,    9.760
+personality_self-confidence                                         ,   -1.6345,    4.628,   -0.353, 0.724,  -10.779,    7.510
+social-function_social-communication                                ,   -1.5071,    3.876,   -0.389, 0.698,   -9.167,    6.152
+social-function_social-cooperation                                  ,    0.4137,    3.896,    0.106, 0.916,   -7.284,    8.111
+social-function_social-engagement                                   ,    1.1576,    3.084,    0.375, 0.708,   -4.936,    7.251
+social-function_tolerance                                           ,   -6.3572,    4.065,   -1.564, 0.120,  -14.388,    1.674
+somatic-and-sensory-functions_eating                                ,    2.4822,    2.238,    1.109, 0.269,   -1.939,    6.904
+somatic-and-sensory-functions_sensory-reactivity                    ,   -4.6466,    2.902,   -1.601, 0.111,  -10.380,    1.087
+somatic-and-sensory-functions_sexual-identity-behavior              ,    5.7693,    8.137,    0.709, 0.479,  -10.309,   21.848
+toileting                                                           ,   -1.0889,    1.937,   -0.562, 0.575,   -4.916,    2.739
+Omnibus:      ,50.672,  Durbin-Watson:     ,   1.603
+Prob(Omnibus):, 0.000,  Jarque-Bera (JB):  , 135.284
+Skew:         , 1.039,  Prob(JB):          ,4.20e-30
+Kurtosis:     , 6.349,  Cond. No.          ,    157.
+
+Notes:
+[1] R² is computed without centering (uncentered) since the model does not contain a constant.
+[2] Standard Errors assume that the covariance matrix of the errors is correctly specified.

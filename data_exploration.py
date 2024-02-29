@@ -2,13 +2,11 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-def make_corr_matrix(data_for_corr, sdq_subscales, facets_cols):
-    
-
+def make_corr_matrix(data_for_corr, sdq_subscales, facets_cols, file_name_prefix=""):
     corr_mat = data_for_corr.corr().loc[facets_cols, sdq_subscales].sort_values("tot", ascending=False)
-    corr_mat.to_csv("data/output/corr_mat.csv", float_format='%.2f')
+    corr_mat.to_csv(f"output/corr_mat{file_name_prefix}.csv", float_format='%.2f')
 
-def make_scatter_plots(data, sdq_subscales, facets_cols):
+def make_scatter_plots(data, sdq_subscales, facets_cols, file_name_prefix=""):
     # Grouped scatter plots
 
     fig, axs = plt.subplots(len(facets_cols), len(sdq_subscales), figsize=(30, 100))  # 3 subplots side by side
@@ -29,9 +27,9 @@ def make_scatter_plots(data, sdq_subscales, facets_cols):
     plt.tight_layout()
 
     #plt.tight_layout()
-    plt.savefig("data/plots/scatter.png")
+    plt.savefig(f"output/plots/scatter{file_name_prefix}.png")
 
-def plot_histograms_facets(data, facets_cols):
+def plot_histograms_facets(data, facets_cols, file_name_prefix=""):
     # Distribution of each FACETS item
     fig, axs = plt.subplots(len(facets_cols), 1, figsize=(6, 150))  # 3 subplots side by side
     
@@ -64,46 +62,43 @@ def plot_histograms_facets(data, facets_cols):
     plt.tight_layout()
 
     #plt.tight_layout()
-    plt.savefig("data/plots/facet_histograms.png")
+    plt.savefig(f"output/plots/facet_histograms{file_name_prefix}.png")
 
-def multiple_regression(data, sdq_subscales, facets_cols):
-    print(data[sdq_subscales].isna().sum(), data[facets_cols].isna().sum())
+def multiple_regression(data, sdq_subscales, facets_cols, file_name_prefix=""):
     import statsmodels.api as sm
     for subscale in sdq_subscales:
         print(subscale)
         mod = sm.OLS(data[subscale], data[facets_cols])
         result = mod.fit()
-        #print(result.params)
-        print(result.summary())
+
+        with open(f"output/ols_{subscale}{file_name_prefix}.csv", 'w') as f:
+            f.write(result.summary().as_csv())
 
 if __name__ == "__main__":
 
     data = pd.read_csv("data/merged.csv", index_col=0)
 
     description = data.describe()
-    description.to_csv("data/output/description.csv")
+    description.to_csv("output/description.csv")
 
-    data_for_corr = data.drop([
+    non_num_cols = [
         "Entry ID", "Actor type", "Subject ID", "Study ID", "Group ID",
         "anonymised ID", "Time", "Subject-Respondent Pair ID"
-    ], axis=1)
+    ]
+    data_for_corr = data.drop(non_num_cols, axis=1)
     print(data_for_corr.columns)
 
     sdq_subscales = ["emotion", "conduct", "hyper", "peer",	"prosoc", "tot"]
-    facets_cols = [x for x in data_for_corr.columns if "_" in x]
+    facets_cols = [x for x in data_for_corr.columns if "_" in x] + ["toileting"]
     sdq_item_cols = [x for x in data_for_corr.columns if x not in facets_cols and x not in sdq_subscales]
     
-    #make_corr_matrix(data_for_corr, sdq_subscales, facets_cols)
+    make_corr_matrix(data_for_corr, sdq_subscales, facets_cols)
     #make_scatter_plots(data, sdq_subscales, facets_cols)
     #plot_histograms_facets(data_for_corr, facets_cols)
     multiple_regression(data, sdq_subscales, facets_cols)
 
-    cats = []
-    for col in data.columns:
-        if "_" in col:
-            cat = col.split("_")[0]
-            cats.append(cat)
-    cats = set(cats)
-    print(cats)
-
-    
+    data_split_by_anchors = pd.read_csv("data/merged_split_by_anchor.csv")
+    data_split_by_anchors = data_split_by_anchors.drop(non_num_cols, axis=1)
+    facets_cols_split = [x for x in data_split_by_anchors.columns if "_" in x]
+    make_corr_matrix(data_split_by_anchors, sdq_subscales, facets_cols_split, file_name_prefix="_split")
+    multiple_regression(data_split_by_anchors, sdq_subscales, facets_cols_split, file_name_prefix="_split")

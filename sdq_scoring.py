@@ -11,14 +11,14 @@ class SDQScorer():
         self.df = df
 
     def _recode_inverse_items(self):
-        recode_dict = {"0": 2, "1": 1, "2": 0}
-
+        recode_dict = {0: 2, 1: 1, 2: 0}
+        
         self.df["obeys"].replace(recode_dict, inplace=True)
         self.df["reflect"].replace(recode_dict, inplace=True)
         self.df["attends"].replace(recode_dict, inplace=True)
         self.df["friend"].replace(recode_dict, inplace=True)
         self.df["popular"].replace(recode_dict, inplace=True)
-
+        
     def _score_subscale(self, cols, name):
         df = self.df[cols]
         df["n missing"] = df.isnull().sum(axis=1) # Calculate nan values for each row
