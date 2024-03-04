@@ -27,7 +27,7 @@ def make_scatter_plots(data, sdq_subscales, facets_cols, file_name_prefix=""):
     plt.tight_layout()
 
     #plt.tight_layout()
-    plt.savefig(f"output/plots/scatter{file_name_prefix}.png")
+    plt.savefig(f"plots/scatter{file_name_prefix}.png")
 
 def plot_histograms_facets(data, facets_cols, file_name_prefix=""):
     # Distribution of each FACETS item
@@ -62,7 +62,7 @@ def plot_histograms_facets(data, facets_cols, file_name_prefix=""):
     plt.tight_layout()
 
     #plt.tight_layout()
-    plt.savefig(f"output/plots/facet_histograms{file_name_prefix}.png")
+    plt.savefig(f"plots/facet_histograms{file_name_prefix}.png")
 
 def multiple_regression(data, sdq_subscales, facets_cols, file_name_prefix=""):
     import statsmodels.api as sm
@@ -81,11 +81,11 @@ if __name__ == "__main__":
     description = data.describe()
     description.to_csv("output/description.csv")
 
-    non_num_cols = [
-        "Entry ID", "Actor type", "Subject ID", "Study ID", "Group ID",
-        "anonymised ID", "Time", "Subject-Respondent Pair ID"
-    ]
-    data_for_corr = data.drop(non_num_cols, axis=1)
+    # non_num_cols = [
+    #     "Entry ID", "Actor type", "Subject ID", "Study ID", "Group ID",
+    #     "anonymised ID", "Time", "Subject-Respondent Pair ID"
+    # ]
+    data_for_corr = data.drop("Study ID", axis=1)
     print(data_for_corr.columns)
 
     sdq_subscales = ["emotion", "conduct", "hyper", "peer",	"prosoc", "tot"]
@@ -98,7 +98,7 @@ if __name__ == "__main__":
     multiple_regression(data, sdq_subscales, facets_cols)
 
     data_split_by_anchors = pd.read_csv("data/merged_split_by_anchor.csv")
-    data_split_by_anchors = data_split_by_anchors.drop(non_num_cols, axis=1)
+    data_split_by_anchors = data_split_by_anchors.drop("Study ID", axis=1)
     facets_cols_split = [x for x in data_split_by_anchors.columns if "_" in x]
     make_corr_matrix(data_split_by_anchors, sdq_subscales, facets_cols_split, file_name_prefix="_split")
     multiple_regression(data_split_by_anchors, sdq_subscales, facets_cols_split, file_name_prefix="_split")

@@ -37,6 +37,11 @@ def preprocess_sdq(sdq_data):
 
     return scored_sdq
 
+def group_by_participant(data):
+    #data = data.groupby("") :TODO
+    return data
+    
+
 def split_by_anchor(data):
     facets_cols = [x for x in data.columns if "_" in x] + ["toileting"]
 
@@ -61,21 +66,42 @@ if __name__ == "__main__":
 
     sdq_data = preprocess_sdq(sdq_data)
     facets_data = preprocess_facets(facets_data)
+
+    sdq_data = sdq_data.rename(columns={"anonymised ID": "Study ID"})
     
     sdq_data.to_csv("data/sdq_scored_cleaned.csv")
     facets_data.to_csv("data/facets_transformed.csv")
 
-    merged = sdq_data.merge(
-        facets_data, 
-        left_on="anonymised ID", 
-        right_on="Study ID")
+    sdq_grouped = sdq_data.groupby("Study ID", as_index=False).mean()
+    facets_grouped = facets_data.drop([
+        "Entry ID",
+        "Actor type",
+        "Group ID",
+        "Time",
+        "Subject-Respondent Pair ID",
+        "Subject ID"], axis=1).groupby("Study ID", as_index=False).mean()
+
+    sdq_grouped.to_csv("data/sdq_scored_cleaned_grouped.csv")
+    facets_grouped.to_csv("data/facets_transformed_grouped.csv")
+
+    print(facets_grouped.columns)
+    print(sdq_grouped.columns)
+
+    #print(sdq_data.columns)
+    #print(facets_data.columns)
+    merged = sdq_grouped.merge(
+        facets_grouped, 
+        on="Study ID",
+        how="inner")
     print(merged.describe())
 
     merged.to_csv("data/merged.csv")
 
-    print("Unique Patient IDs in SDQ: ", len(sdq_data["anonymised ID"].unique()))
-    print("Unique Patient IDs in FACETS: ", len(facets_data["Subject ID"].unique()))
-    print("Unique Patient IDs in Merged: ", len(merged["anonymised ID"].unique()))
+    print("Unique Patient IDs in SDQ: ", len(sdq_grouped["Study ID"].unique()))
+    print("Unique Patient IDs in FACETS: ", len(facets_grouped["Study ID"].unique()))
+    print("Unique Patient IDs in Merged: ", len(merged["Study ID"].unique()))
 
-    merged_and_split_by_anchor = split_by_anchor(merged)
-    merged_and_split_by_anchor.to_csv("data/merged_split_by_anchor.csv")
+    merged_grouped_and_split_by_anchor = split_by_anchor(merged)
+    merged_grouped_and_split_by_anchor.to_csv("data/merged_split_by_anchor.csv")
+
+    
