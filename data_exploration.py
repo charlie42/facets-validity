@@ -74,6 +74,15 @@ def multiple_regression(data, sdq_subscales, facets_cols, file_name_prefix=""):
         with open(f"output/ols_{subscale}{file_name_prefix}.csv", 'w') as f:
             f.write(result.summary().as_csv())
 
+def group_comparisons(data, facets_cols):
+    for diag in [x for x in data.columns if "Diag." in x]:
+        print(diag)
+        for facets_col in facets_cols:
+            print(facets_col)
+            data[[diag, facets_col]].boxplot(by=diag)
+            plt.ylim([0, 1])
+            plt.savefig(f"plots/diags/{diag}_{facets_col}.png")
+
 if __name__ == "__main__":
 
     data = pd.read_csv("data/merged.csv", index_col=0)
@@ -85,20 +94,22 @@ if __name__ == "__main__":
     #     "Entry ID", "Actor type", "Subject ID", "Study ID", "Group ID",
     #     "anonymised ID", "Time", "Subject-Respondent Pair ID"
     # ]
-    data_for_corr = data.drop("Study ID", axis=1)
-    print(data_for_corr.columns)
-
-    sdq_subscales = ["emotion", "conduct", "hyper", "peer",	"prosoc", "tot"]
-    facets_cols = [x for x in data_for_corr.columns if "_" in x] + ["toileting"]
-    sdq_item_cols = [x for x in data_for_corr.columns if x not in facets_cols and x not in sdq_subscales]
+    data = data.drop("Study ID", axis=1)
     
-    make_corr_matrix(data_for_corr, sdq_subscales, facets_cols)
-    #make_scatter_plots(data, sdq_subscales, facets_cols)
-    #plot_histograms_facets(data_for_corr, facets_cols)
-    multiple_regression(data, sdq_subscales, facets_cols)
+    sdq_subscales = ["emotion", "conduct", "hyper", "peer",	"prosoc", "tot"]
+    facets_cols = [x for x in data.columns if "_" in x] + ["toileting"]
+    sdq_item_cols = [x for x in data.columns if x not in facets_cols and x not in sdq_subscales]
+    
+    #make_corr_matrix(data, sdq_subscales, facets_cols)
+    ##make_scatter_plots(data, sdq_subscales, facets_cols)
+    ##plot_histograms_facets(data, facets_cols)
+    #multiple_regression(data, sdq_subscales, facets_cols)
+    group_comparisons(data, facets_cols)
 
     data_split_by_anchors = pd.read_csv("data/merged_split_by_anchor.csv")
     data_split_by_anchors = data_split_by_anchors.drop("Study ID", axis=1)
-    facets_cols_split = [x for x in data_split_by_anchors.columns if "_" in x]
-    make_corr_matrix(data_split_by_anchors, sdq_subscales, facets_cols_split, file_name_prefix="_split")
-    multiple_regression(data_split_by_anchors, sdq_subscales, facets_cols_split, file_name_prefix="_split")
+    facets_cols_split = [x for x in data_split_by_anchors.columns if "LEFT" in x or "RIGHT" in x]
+    #make_corr_matrix(data_split_by_anchors, sdq_subscales, facets_cols_split, file_name_prefix="_split")
+    #multiple_regression(data_split_by_anchors, sdq_subscales, facets_cols_split, file_name_prefix="_split")
+
+    

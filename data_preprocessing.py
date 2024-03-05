@@ -37,10 +37,30 @@ def preprocess_sdq(sdq_data):
 
     return scored_sdq
 
-def group_by_participant(data):
-    #data = data.groupby("") :TODO
+def preprocess_diagnostics(data):
+    # Drop rows with empty Study ID 
+    data = data[~(data["Study ID"].isna())]
+
+    # Drop where Diag completion is not 1
+    data = data[data["Diag completion"] == 1]
+    data = data.drop("Diag completion", axis=1)
+
+    # Strip whitespaces
+    data = data.apply(lambda col: col.str.strip())
+
+    # Replace NaN with 0
+    data = data.fillna(0)
+
+    # Replace Y with 1, N with 0, N/A with nan
+    data = data.replace({"Y": 1, "N": 0, "N/A": np.nan})
+
+    # Add prefix to diag columns, ignore Study ID column
+    data.columns = ["Diag."+x if x != "Study ID" else x for x in data.columns]
+
+    print(data.columns)
+    print(data.dtypes)
+
     return data
-    
 
 def split_by_anchor(data):
     facets_cols = [x for x in data.columns if "_" in x] + ["toileting"]
@@ -63,14 +83,17 @@ if __name__ == "__main__":
     
     facets_data = json.load(open("data/facets.json"))
     sdq_data = pd.read_csv("data/sdq.csv", sep=";")
+    diagnostics_data = pd.read_csv("data/diagnostics.csv", sep=";")
 
     sdq_data = preprocess_sdq(sdq_data)
     facets_data = preprocess_facets(facets_data)
+    diagnostics_data = preprocess_diagnostics(diagnostics_data)
 
     sdq_data = sdq_data.rename(columns={"anonymised ID": "Study ID"})
     
     sdq_data.to_csv("data/sdq_scored_cleaned.csv")
     facets_data.to_csv("data/facets_transformed.csv")
+    diagnostics_data.to_csv("data/diagnostics_transformed.csv")
 
     sdq_grouped = sdq_data.groupby("Study ID", as_index=False).mean()
     facets_grouped = facets_data.drop([
@@ -80,19 +103,26 @@ if __name__ == "__main__":
         "Time",
         "Subject-Respondent Pair ID",
         "Subject ID"], axis=1).groupby("Study ID", as_index=False).mean()
+    # Take first entry for each participant (:TODO take senior value)
+    diagnostics_grouped = diagnostics_data.groupby("Study ID").first()
 
     sdq_grouped.to_csv("data/sdq_scored_cleaned_grouped.csv")
     facets_grouped.to_csv("data/facets_transformed_grouped.csv")
+    diagnostics_grouped.to_csv("data/diagnostics_transformed_grouped.csv")
 
     print(facets_grouped.columns)
     print(sdq_grouped.columns)
+    print(diagnostics_grouped.columns)
 
-    #print(sdq_data.columns)
-    #print(facets_data.columns)
     merged = sdq_grouped.merge(
         facets_grouped, 
         on="Study ID",
         how="inner")
+    merged = merged.merge(
+        diagnostics_grouped,
+        on="Study ID",
+        how="inner"
+    )
     print(merged.describe())
 
     merged.to_csv("data/merged.csv")
