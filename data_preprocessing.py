@@ -2,8 +2,10 @@ import pandas as pd
 import numpy as np
 import json
 
+from sdq_scoring import SDQScorer
+from facets_preprocessing import FACETSFormatter
+
 def preprocess_facets(facets_data):
-    from facets_preprocessing import FACETSFormatter
     formatter = FACETSFormatter(facets_data)
     df = formatter.transform()
     print(df)
@@ -30,7 +32,6 @@ def preprocess_sdq(sdq_data):
             sdq_data[col] = pd.to_numeric(sdq_data[col])
 
     # Score
-    from sdq_scoring import SDQScorer
     sdq_scorer = SDQScorer(sdq_data)
     scored_sdq = sdq_scorer.score()
     print(scored_sdq)
@@ -101,18 +102,10 @@ if __name__ == "__main__":
         "Actor type",
         "Group ID",
         "Time",
-        "Subject-Respondent Pair ID",
+        "Respondent Hash",
         "Subject ID"], axis=1).groupby("Study ID", as_index=False).mean()
-    # Take first entry for each participant (:TODO take senior value)
+    # Take first entry for each participant (:TODO confirm that we do this)
     diagnostics_grouped = diagnostics_data.groupby("Study ID").first()
-
-    sdq_grouped.to_csv("data/sdq_scored_cleaned_grouped.csv")
-    facets_grouped.to_csv("data/facets_transformed_grouped.csv")
-    diagnostics_grouped.to_csv("data/diagnostics_transformed_grouped.csv")
-
-    print(facets_grouped.columns)
-    print(sdq_grouped.columns)
-    print(diagnostics_grouped.columns)
 
     merged = sdq_grouped.merge(
         facets_grouped, 

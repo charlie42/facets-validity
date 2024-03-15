@@ -92,7 +92,7 @@ if __name__ == "__main__":
 
     # non_num_cols = [
     #     "Entry ID", "Actor type", "Subject ID", "Study ID", "Group ID",
-    #     "anonymised ID", "Time", "Subject-Respondent Pair ID"
+    #     "anonymised ID", "Time", "Respondent Hash"
     # ]
     data = data.drop("Study ID", axis=1)
     

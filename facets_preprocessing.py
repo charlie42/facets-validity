@@ -39,7 +39,7 @@ class FACETSFormatter():
             "Subject ID", 
             "Group ID", 
             "Time", 
-            "Subject-Respondent Pair ID",
+            "Respondent Hash",
             "Section ID",
             "Item ID", 
             "Value"
@@ -69,7 +69,7 @@ class FACETSFormatter():
     def _transpose_items(self):
         df_to_transpose = self.df.drop("Section ID", axis=1)
         df_to_transpose = df_to_transpose.reset_index().pivot(index = [
-            "Entry ID", "Actor type", "Subject ID","Study ID", "Group ID", "Time", "Subject-Respondent Pair ID"
+            "Entry ID", "Actor type", "Subject ID","Study ID", "Group ID", "Time", "Respondent Hash"
         ], columns = "Item ID", values = "Value").reset_index()
 
         self.df = df_to_transpose
