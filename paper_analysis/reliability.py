@@ -65,7 +65,6 @@ def check_percentage_agreement(df, facets_cols):
     # Check absolute agreement
 
     rows = []
-    
 
     for col in facets_cols:
         
@@ -74,17 +73,27 @@ def check_percentage_agreement(df, facets_cols):
         # Check if two values for the subject are equal (1 unique value)
         agreement = df.groupby("Subject ID")[col_name].nunique().eq(1)
         agreement_percentage = agreement.sum()/len(agreement)
+        
+        # Calculate delta between respondes, non-binned values
+        df[col] = pd.to_numeric(df[col], errors='coerce') # Is a cetegory now
+        deltas = abs(df.groupby("Subject ID")[col].diff()) # Difference with previous row
+        mean_delta = deltas.mean()
+
+        # DEBUG
+        if col == "other-special-issues_perception-of-reality":
+            print(list(deltas))
 
         
-        # Calculate delta between respondes
-        df[col_name] = pd.to_numeric(df[col_name], errors='coerce') # Is a cetegory now
-        deltas = abs(df.groupby("Subject ID")[col_name].diff()) # Difference with previous row
-        sum_deltas = deltas.sum()
-        
-        rows.append([col, agreement_percentage, sum_deltas])
+        rows.append([col, agreement_percentage, mean_delta])
 
-    result_df = pd.DataFrame(rows, columns=["Item", "Agreement Percentage", "Sum difference"])
-    result_df.sort_values("Agreement Percentage", ascending=False).to_csv("output/paper/agreement_percentage.csv")
+    result_df = pd.DataFrame(rows, columns=[
+        "Item", 
+        "Agreement Percentage", 
+        "Mean difference (Score 0 to 1)"
+    ])
+    result_df.sort_values("Agreement Percentage", ascending=False).to_csv(
+        "output/paper/agreement_percentage.csv",
+        float_format='%.3f')
 
     return result_df
 
