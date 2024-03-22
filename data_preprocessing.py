@@ -92,6 +92,7 @@ if __name__ == "__main__":
 
     sdq_data = sdq_data.rename(columns={"anonymised ID": "Study ID"})
     
+    print("DEBUG 111")
     sdq_data.to_csv("data/sdq_scored_cleaned.csv")
     facets_data.to_csv("data/facets_transformed.csv")
     diagnostics_data.to_csv("data/diagnostics_transformed.csv")

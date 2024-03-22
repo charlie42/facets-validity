@@ -25,18 +25,24 @@ def get_rater_with_most_n(df):
 def filter_by_rater(df, raters):
     return df[(df["Respondent Hash"] == raters[0]) | (df["Respondent Hash"] == raters[1])]
 
-def check_irr_icc(df, facets_cols):
+def check_irr_icc(df, facets_cols, type, filename_suffix):
     rows = []
     for col in facets_cols:
         icc = pg.intraclass_corr(
             data=df, 
             targets="Study ID", 
             raters="Respondent Hash", 
-            ratings=col).set_index('Type').loc["ICC1"][["ICC", "pval", "CI95%"]]
+            ratings=col).set_index('Type').loc[type][["ICC", "pval", "CI95%"]]
         rows.append([col, icc["ICC"], icc["pval"], icc["CI95%"]])
     icc_df = pd.DataFrame(rows, columns = ["Item", "ICC", "PVal", "CI95"]).sort_values("PVal")
-    icc_df.to_csv("output/paper/irr.csv", float_format='%.3f')
+    icc_df.to_csv(f"output/paper/irr_{filename_suffix}.csv", float_format='%.3f')
     return icc_df
+
+def check_irr_icc_fixed_raters(df, facets_cols):
+    check_irr_icc(df, facets_cols, "ICC2", "fixed")
+
+def check_irr_icc_random_raters(df, facets_cols):
+    check_irr_icc(df, facets_cols, "ICC1", "random")
 
 def bin(df, facets_cols, n_bins):
     # Bin FACETS cols into n_bins equally sized bins
@@ -173,9 +179,10 @@ if __name__ == "__main__":
     ]
     df_for_irr = filter_by_rater(df, raters)
 
-    icc_df = check_irr_icc(df_for_irr, facets_cols)
+    icc_df = check_irr_icc_fixed_raters(df_for_irr, facets_cols)
+    icc_df = check_irr_icc_random_raters(df, facets_cols)
 
-    df_for_percent_agreement = transform_for_percent_agreement(df, facets_cols, 5)
+    df_for_percent_agreement = bin(df, facets_cols, 5)
     check_percentage_agreement(df_for_percent_agreement, facets_cols)
 
     plot_agreement(df, facets_cols)
