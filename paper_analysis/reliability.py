@@ -1,6 +1,8 @@
 import pandas as pd
 import pingouin as pg
 import matplotlib.pyplot as plt
+import itertools
+from pathlib import Path
 
 def filter_doubly_rated(df):
     # Filter participants rated by two clinicians
@@ -25,24 +27,65 @@ def get_rater_with_most_n(df):
 def filter_by_rater(df, raters):
     return df[(df["Respondent Hash"] == raters[0]) | (df["Respondent Hash"] == raters[1])]
 
-def check_irr_icc(df, facets_cols, type, filename_suffix):
+def check_irr_icc(df, facets_cols, raters_col, type):
     rows = []
     for col in facets_cols:
         icc = pg.intraclass_corr(
             data=df, 
             targets="Study ID", 
-            raters="Respondent Hash", 
+            raters=raters_col, 
             ratings=col).set_index('Type').loc[type][["ICC", "pval", "CI95%"]]
         rows.append([col, icc["ICC"], icc["pval"], icc["CI95%"]])
     icc_df = pd.DataFrame(rows, columns = ["Item", "ICC", "PVal", "CI95"]).sort_values("PVal")
-    icc_df.to_csv(f"output/paper/irr_{filename_suffix}.csv", float_format='%.3f')
+    #icc_df.to_csv(f"output/paper/irr_{filename_suffix}.csv", float_format='%.3f')
     return icc_df
 
-def check_irr_icc_fixed_raters(df, facets_cols):
-    check_irr_icc(df, facets_cols, "ICC2", "fixed")
+def prepare_dfs_per_clinic(df):
+    dfs = []
 
-def check_irr_icc_random_raters(df, facets_cols):
-    check_irr_icc(df, facets_cols, "ICC1", "random")
+    clinicians = list(df["Respondent Hash"].unique())
+    
+    # Get all sets patients rated by the same 2 clinicians (=1 clinic)
+    clinician_sets = list(itertools.combinations(clinicians, 2))
+
+    for clinician_set in clinician_sets:
+        sets_of_participants = []
+        for clinician in clinician_set:
+            participants_per_clinician = set(df[df["Respondent Hash"] == clinician]["Subject ID"].unique())
+            sets_of_participants.append(participants_per_clinician)
+        overlapping_participants = set.intersection(*sets_of_participants)
+        if len(overlapping_participants) > 5:
+            clinic_df = df[(df["Respondent Hash"].isin(clinician_set) & (df["Subject ID"].isin(overlapping_participants)))]
+            dfs.append(clinic_df)
+    
+    return dfs
+
+def check_icc_per_clinic(df, facets_cols):
+    clinic_dfs = prepare_dfs_per_clinic(df)
+    save_path = "output/paper/reliability/icc_per_clinic/"
+    Path(save_path).mkdir(parents=True, exist_ok=True)
+
+    for i, clinic_df in enumerate(clinic_dfs):
+        icc_df = check_irr_icc_fixed_raters(clinic_df, facets_cols, "Respondent Hash")
+        n = len(clinic_df["Subject ID"].unique())
+        icc_df.to_csv(save_path+str(i)+"_"+str(n)+".csv", float_format='%.3f')
+
+def prepare_df_across_clinics(df, facets_cols):
+    df = add_rater_count_col(df)
+    print(df.sort_values("Subject ID"))
+    return df
+
+def check_icc_across_clinics(df, facets_cols):
+    df = prepare_df_across_clinics(df, facets_cols)
+    icc_df = check_irr_icc_random_raters(df, facets_cols, raters_col="N Rater")
+    
+    icc_df.to_csv("output/paper/reliability/icc_across_clinics.csv", float_format='%.3f')
+    
+def check_irr_icc_fixed_raters(df, facets_cols, raters_col):
+    return check_irr_icc(df, facets_cols, raters_col, "ICC2")
+
+def check_irr_icc_random_raters(df, facets_cols, raters_col):
+    return check_irr_icc(df, facets_cols, raters_col, "ICC1")
 
 def bin(df, facets_cols, n_bins):
     # Bin FACETS cols into n_bins equally sized bins
@@ -98,7 +141,7 @@ def check_percentage_agreement(df, facets_cols):
         "Mean difference (Score 0 to 1)"
     ])
     result_df.sort_values("Agreement Percentage", ascending=False).to_csv(
-        "output/paper/agreement_percentage.csv",
+        "output/paper/reliability/agreement_percentage.csv",
         float_format='%.3f')
 
     return result_df
@@ -165,6 +208,9 @@ def plot_agreement(df, facets_cols):
 
 if __name__ == "__main__":
 
+    save_path = "output/paper/reliability/"
+    Path(save_path).mkdir(parents=True, exist_ok=True)
+
     df = pd.read_csv("data/facets_transformed.csv", index_col=0)
     facets_cols = [x for x in df.columns if x not in [
         "Entry ID", "Actor type", "Subject ID", "Study ID", "Group ID", "Time", "Respondent Hash"
@@ -172,15 +218,8 @@ if __name__ == "__main__":
 
     df = filter_doubly_rated(df)
     
-    # Raters who rated most participants (from data_verification.py)
-    raters = [
-        "dd91d49eefa2c289c9eaef735967b4d5e659350f593678894250e5de1240f5a1d79073381fb49ccb6808b7a9d661603b9505ee26a10194d81a033aba9c06ebd0",
-        "8f797962581e4e2c8607d89c848c8a6f82590b49e987e7df9fe444cbc313f7f6860820f4b6e0d9d1bbf8908b824d6b43d73fba2932e8af7e097ad2a83d7f35c1"
-    ]
-    df_for_irr = filter_by_rater(df, raters)
-
-    icc_df = check_irr_icc_fixed_raters(df_for_irr, facets_cols)
-    icc_df = check_irr_icc_random_raters(df, facets_cols)
+    check_icc_per_clinic(df, facets_cols)
+    check_icc_across_clinics(df, facets_cols)
 
     df_for_percent_agreement = bin(df, facets_cols, 5)
     check_percentage_agreement(df_for_percent_agreement, facets_cols)

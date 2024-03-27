@@ -4,7 +4,7 @@ import json
 
 from sdq_scoring import SDQScorer
 from facets_preprocessing import FACETSFormatter
-
+    
 def preprocess_facets(facets_data):
     formatter = FACETSFormatter(facets_data)
     df = formatter.transform()

@@ -1,6 +1,6 @@
 # lisa-school-2024
 
-1. Create `input` directory, copy:
+1. Create `data` directory, copy:
 - .json FACETS file named `facets.json`
 - .csv file with SDQ scores named `sdq.csv`
 - .csv file with diagnostics names `diagnostics.csv`, rename `anonimised id` to `Study ID`

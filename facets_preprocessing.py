@@ -10,8 +10,23 @@ class FACETSFormatter():
         self.item_names = None
 
     def _parse_entries(self):
-        print("Available fields: ", self.json["assessment_response_list_anonymized"][0].keys())
-        print("DEBUG", self.json["assessment_response_list_anonymized"][0])
+        #print("Available fields: ", self.json["assessment_response_list_anonymized"][0].keys())
+        #print("DEBUG", self.json["assessment_response_list_anonymized"][0])
+
+
+        apple 1 size: 5, color: red 
+        [
+            [5, red],
+            [4, yellow]
+        ]
+
+        assessment_response_list_anonymize: [
+            {student: 1, assessment_response_sections:[
+                
+            ]},
+            {student: 1, assessment_response_sections:[]}
+        ]
+
         rows = []
         for entry in self.json["assessment_response_list_anonymized"]:
             # Have to filter by gruop id here to get latest version of FACETS
